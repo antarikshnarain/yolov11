@@ -1,18 +1,12 @@
 from ultralytics import YOLO
 
 # Load a model
-model = YOLO("yolo11n.yaml").load(
-    "models/yolo11n.pt"
-)  # build from YAML and transfer weights
-
-# Train the model
-results = model.train(data="models/coco.yaml", epochs=100, imgsz=640)
-
-# Load a model
 model = YOLO("models/yolo11n.pt")  # load an official model
 
 # Validate the model
-metrics = model.val()  # no arguments needed, dataset and settings remembered
+metrics = model.val(
+    data="coco.yaml"
+)  # no arguments needed, dataset and settings remembered
 print(metrics.box.map)  # map50-95
 print(metrics.box.map50)  # map50
 print(metrics.box.map75)  # map75
@@ -32,6 +26,7 @@ for result in results:
         result.names[cls.item()] for cls in result.boxes.cls.int()
     ]  # class name of each box
     confs = result.boxes.conf  # confidence score of each box
+    result.show()  # display results
 
 # Export the model
 model.export(format="onnx")

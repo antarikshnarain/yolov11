@@ -1,28 +1,16 @@
 from ultralytics import YOLO
 
 # Load a model
-# model = YOLO("yolo11n-obb.yaml")  # build a new model from YAML
-# model = YOLO("yolo11n-obb.pt")  # load a pretrained model (recommended for training)
-# model = YOLO("yolo11n-obb.yaml").load(
-#     "yolo11n.pt"
-# )  # build from YAML and transfer weights
-
-# # Train the model
-# results = model.train(data="dota8.yaml", epochs=100, imgsz=640)
+model = YOLO("yolo11n-obb.pt")  # load a pretrained model (recommended for training)
 
 # Validate the model
-# metrics = model.val(
-#     data="dota8.yaml"
-# )  # no arguments needed, dataset and settings remembered
-# print(metrics.box.map)  # map50-95(B)
-# print(metrics.box.map50)  # map50(B)
-# print(metrics.box.map75)  # map75(B)
-# print(metrics.box.maps)  # a list containing mAP50-95(B) for each category
-
-model = YOLO(
-    "models/yolo11n-obb.pt"
-)  # load a pretrained model (recommended for training)
-
+metrics = model.val(
+    data="dota8.yaml"
+)  # no arguments needed, dataset and settings remembered
+print(metrics.box.map)  # map50-95(B)
+print(metrics.box.map50)  # map50(B)
+print(metrics.box.map75)  # map75(B)
+print(metrics.box.maps)  # a list containing mAP50-95(B) for each category
 
 # Predict with the model
 results = model("https://ultralytics.com/images/boats.jpg")  # predict on an image
